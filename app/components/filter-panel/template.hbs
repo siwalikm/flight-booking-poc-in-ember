@@ -1,0 +1,33 @@
+{{yield}}
+
+{{#power-select options=getCities
+   placeholder="Where from?"
+     allowClear=true
+    selected=selectedSource onchange=(action "chooseSourceCity") as |name|}}
+  {{name}}
+{{/power-select}}
+
+{{#power-select options=getCities
+   placeholder="Where to?"
+     allowClear=true
+    selected=selectedDestination onchange=(action "chooseDestinationCity") as |name|}}
+  {{name}}
+{{/power-select}}
+
+<div class="date-picker-container">
+  <span class="form-icons">{{fa-icon 'plane-departure'}}</span>
+  Departure Date
+  {{date-picker placeholder="Select travel date"
+minDate=currentDate
+action=(action 'updateDate')}}
+</div>
+
+{{#if isBothWayFlight}}
+  <div class="date-picker-container">
+    <span class="form-icons">{{fa-icon 'plane-arrival'}}</span>
+    Return Date
+    {{date-picker placeholder="Select travel date"
+minDate=currentDate
+action=(action 'updateDate')}}
+  </div>
+{{/if}}

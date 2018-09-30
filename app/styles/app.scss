@@ -1,0 +1,78 @@
+@import "ember-power-select";
+
+html {
+  --contrast-light-bg: #f9fafe;
+  --contrast-dark-bg: #e9f0f8;
+  --input-border: #ebebeb;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+
+  .filter-wrapper {
+    background: var(--contrast-light-bg);
+    flex-basis: 400px;
+
+    span.form-icons {
+      background: #ebebeb;
+      padding: 6px;
+    }
+
+    .ember-power-select-trigger {
+      border-radius: 0;
+      padding: 10px;
+      border: 2px solid var(--input-border);
+      margin: 12px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+    .ember-power-select-placeholder {
+      color: black;
+    }
+    .date-picker-container {
+      border-radius: 0;
+      padding: 10px 10px 0 18px;
+      border: 2px solid var(--input-border);
+      margin: 012px;
+      background: white;
+
+      .date-picker__button {
+        border-radius: 0;
+        padding: 10px;
+        border: 2px solid var(--input-border);
+        margin: 0 12px 12px;
+        font-size: 1em;
+
+        &:focus {
+          outline: none;
+          background: var(--contrast-light-bg);
+        }
+      }
+    }
+  }
+
+  .result-wrapper {
+    background: var(--contrast-dark-bg);
+    flex: 1;
+  }
+}
+
+.ember-power-select-dropdown {
+  border: 2px solid var(--input-border);
+}
+
+.date-picker {
+  box-shadow: none;
+  border-radius: 0;
+  border: 2px solid #ebebeb;
+}

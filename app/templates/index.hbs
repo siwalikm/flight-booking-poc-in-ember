@@ -1,0 +1,22 @@
+{{outlet}}
+
+<div class="container">
+  <div class="filter-wrapper">
+    {{#filter-panel flightData=model}}
+    {{/filter-panel}}
+  </div>
+  <div class="result-wrapper">
+    hello there
+  </div>
+</div>
+
+{{!-- {{#each model as |flight|}}
+  {{flight.flight_name}}
+  {{flight.source}}
+  {{flight.destination}}
+  {{flight.departure_time}}
+  {{flight.duration_in_hr}}
+  {{flight.currency}}
+  {{flight.price}}
+  <br> <br>
+{{/each}} --}}
