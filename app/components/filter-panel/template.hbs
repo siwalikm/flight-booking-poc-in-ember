@@ -1,5 +1,21 @@
 {{yield}}
 
+
+<div class="flight-type-selector">
+  <input onchange={{action 'updateFlightType' value="target.value"}} type="radio" class="flight-count" name="flightCountSelector"
+    value="0" id="tab1" checked />
+  <label for="tab1">One way</label>
+  <input onchange={{action 'updateFlightType' value="target.value"}} type="radio" class="flight-count" name="flightCountSelector"
+    value="1" id="tab2" />
+  <label for="tab2">Round trip</label>
+</div>
+
+{{#if sameLocationError}}
+<button class="search-flight error" disabled=true>
+  Oops! Source and destination can't be same.
+</button>
+{{/if}}
+
 {{#power-select options=getCities
    placeholder="Where from?"
      allowClear=true
@@ -18,8 +34,9 @@
   <span class="form-icons">{{fa-icon 'plane-departure'}}</span>
   Departure Date
   {{date-picker placeholder="Select travel date"
-minDate=currentDate
-action=(action 'updateDate')}}
+    minDate=currentDate
+    buttonDateFormat='ll'
+    action=(action 'updateDepartureDate')}}
 </div>
 
 {{#if isBothWayFlight}}
@@ -27,7 +44,12 @@ action=(action 'updateDate')}}
     <span class="form-icons">{{fa-icon 'plane-arrival'}}</span>
     Return Date
     {{date-picker placeholder="Select travel date"
-minDate=currentDate
-action=(action 'updateDate')}}
+      minDate=departureDate
+      buttonDateFormat='ll'
+      action=(action 'updateReturnDate')}}
   </div>
 {{/if}}
+
+<button class="search-flight" disabled={{isDisabled}} onclick={{action 'searchAction'}}>
+  Search flights
+</button>

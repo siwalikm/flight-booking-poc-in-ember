@@ -1,4 +1,13 @@
 import { faker } from "ember-cli-mirage";
+export default function() {
+  this.namespace = "api";
+
+  this.get("/flights", () => {
+    return {
+      data: [...generateFlightStub()]
+    };
+  });
+}
 
 const generateFlightStub = () => {
   const flightBetweenCities = 4;
@@ -42,13 +51,3 @@ const generateFlightStub = () => {
     };
   });
 };
-
-export default function() {
-  this.namespace = "api";
-
-  this.get("/flights", () => {
-    return {
-      data: [...generateFlightStub()]
-    };
-  });
-}

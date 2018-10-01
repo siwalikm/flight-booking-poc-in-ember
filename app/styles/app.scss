@@ -4,6 +4,8 @@ html {
   --contrast-light-bg: #f9fafe;
   --contrast-dark-bg: #e9f0f8;
   --input-border: #ebebeb;
+  --theme-color: #2fcd7a;
+  --theme-white: white;
 }
 
 body {
@@ -21,9 +23,83 @@ body {
     background: var(--contrast-light-bg);
     flex-basis: 400px;
 
+    button {
+      padding: 10px;
+      margin: 13px;
+      width: 94%;
+      display: block;
+      font-size: 1em;
+      transition: 0.5s ease;
+
+      &.search-flight {
+        border: none;
+        background: var(--theme-color);
+        color: var(--theme-white);
+
+        &:hover {
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), 0 3px 6px rgba(0, 0, 0, 0.3);
+          cursor: pointer;
+        }
+
+        &:disabled {
+          background: #2fcd7a5e;
+          cursor: not-allowed;
+          &:hover {
+            box-shadow: none;
+          }
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &.error {
+          border: none;
+          cursor: inherit;
+          background: #db160f7a;
+        }
+      }
+
+    }
+
+    .flight-type-selector {
+      clear: both;
+      display: inline-block;
+      width: 100%;
+      border-bottom: 2px solid var(--input-border);
+      margin: 10px 10px 0 10px;
+    }
+
+    input.flight-count {
+      display: none;
+
+      & + label {
+        cursor: pointer;
+        float: left;
+        border: 2px solid var(--input-border);
+        border-bottom: 0;
+        background-color: var(--theme-white);
+        margin-right: -1px;
+        padding: 14px;
+
+        &:hover {
+          background-color: var(--contrast-dark-bg);
+        }
+      }
+
+      &:checked + label {
+        background-color: var(--theme-color);
+        border-bottom: none;
+        color: var(--theme-white);
+        z-index: 1;
+        transition: 0.2s ease;
+        padding: 14px;
+      }
+    }
+
     span.form-icons {
-      background: #ebebeb;
-      padding: 6px;
+      padding-right: 10px;
+      color: var(--theme-color);
     }
 
     .ember-power-select-trigger {
@@ -36,28 +112,17 @@ body {
         outline: none;
       }
     }
+
     .ember-power-select-placeholder {
       color: black;
     }
+
     .date-picker-container {
       border-radius: 0;
       padding: 10px 10px 0 18px;
       border: 2px solid var(--input-border);
       margin: 012px;
-      background: white;
-
-      .date-picker__button {
-        border-radius: 0;
-        padding: 10px;
-        border: 2px solid var(--input-border);
-        margin: 0 12px 12px;
-        font-size: 1em;
-
-        &:focus {
-          outline: none;
-          background: var(--contrast-light-bg);
-        }
-      }
+      background: var(--theme-white);
     }
   }
 
@@ -74,5 +139,28 @@ body {
 .date-picker {
   box-shadow: none;
   border-radius: 0;
-  border: 2px solid #ebebeb;
+  border: 2px solid var(--input-border);
+  &__button {
+    border-radius: 0;
+    padding: 10px;
+    border: 2px solid var(--input-border);
+    margin: 0 12px 12px;
+    font-size: 1em;
+  }
+  &__day--selected {
+    background-color: var(--theme-color);
+  }
+
+  &__day:hover {
+    background: var(--theme-color);
+  }
+
+  &:focus {
+    outline: none;
+    background: var(--contrast-dark-bg);
+  }
+}
+
+.ember-power-select-option[aria-current="true"] {
+  background-color: var(--theme-color);
 }
