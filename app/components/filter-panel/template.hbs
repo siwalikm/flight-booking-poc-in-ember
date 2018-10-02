@@ -1,6 +1,3 @@
-{{yield}}
-
-
 <div class="flight-type-selector">
   <input onchange={{action 'updateFlightType' value="target.value"}} type="radio" class="flight-count" name="flightCountSelector"
     value="0" id="tab1" checked />
@@ -11,19 +8,19 @@
 </div>
 
 {{#if sameLocationError}}
-<button class="search-flight error" disabled=true>
-  Oops! Source and destination can't be same.
-</button>
+  <button class="search-flight error" disabled=true>
+    Oops! Source and destination can't be same.
+  </button>
 {{/if}}
 
-{{#power-select options=getCities
+{{#power-select options=citiesList
    placeholder="Where from?"
      allowClear=true
     selected=selectedSource onchange=(action "chooseSourceCity") as |name|}}
   {{name}}
 {{/power-select}}
 
-{{#power-select options=getCities
+{{#power-select options=citiesList
    placeholder="Where to?"
      allowClear=true
     selected=selectedDestination onchange=(action "chooseDestinationCity") as |name|}}
@@ -53,3 +50,5 @@
 <button class="search-flight" disabled={{isDisabled}} onclick={{action 'searchAction'}}>
   Search flights
 </button>
+
+{{yield}}

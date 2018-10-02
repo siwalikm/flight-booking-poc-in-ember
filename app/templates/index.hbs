@@ -1,22 +1,131 @@
 {{outlet}}
 
 <div class="container">
+
   <div class="filter-wrapper">
-    {{#filter-panel flightData=model}}
+    {{#filter-panel submit=(action "formSubmit") citiesList=getCities}}
+      <div class="filter-wrapper__slider">
+        <input type="range" min="2000" max="10000" value="4000" class="slider" id="myRange">
+      </div>
     {{/filter-panel}}
   </div>
+
   <div class="result-wrapper">
-    hello there
+    {{!-- default landing page view on page load - start --}}
+    {{#if (and (not filteredFlights) (not selectedFlightData))}}
+      <h1>Cheapest Flight Tickets Guaranteed</h1>
+      <h3>
+        - {{#each getCities as |city|}} {{city}} - {{/each}}
+      </h3>
+      <span class="form-icons">{{fa-icon "plane" spin=true}}</span>
+      {{!-- default landing page view on page load - end --}}
+    {{else}}
+      {{#if selectedFlightData}}
+
+        {{!-- Checkout page view - start --}}
+        <div class="flight-card flight-card__checkout">
+          <div class="flight-card__info-block">
+            <span>{{source}} {{fa-icon "long-arrow-alt-right"}} {{destination}}
+              {{#if isBothWayFlight}}
+                {{fa-icon "long-arrow-alt-right"}} {{source}}
+              {{/if}}
+            </span>
+            <div>Departing on: <strong>{{departureDate}}</strong></div>
+            {{#if isBothWayFlight}}
+              <div>Returning on: <strong>{{returnDate}}</strong></div>
+            {{/if}}
+
+          </div>
+          <div class="flight-card__info-block flight-card__info-block--right">
+            <div class="flight-card__info-block--totalPrice">Total Price <strong>{{selectedFlightData.totalPrice}}</strong></div>
+          </div>
+        </div>
+
+        {{#each selectedFlightData.flights as |flight|}}
+          <div class="flight-card flight-card--justify">
+            <div class="flight-card__info-block">
+              <span class="flight-card__info-block--title">
+                {{flight.source}} {{fa-icon "long-arrow-alt-right"}} {{flight.destination}}</span>
+            </div>
+            <div class="flight-card__info-block">
+              <div>Flight time: {{flight.timeMap}}</div>
+              Duration: ({{flight.duration_in_hr}} hours)
+
+            </div>
+            <div class="flight-card__info-block">
+              <span><em>Carrier: {{flight.flight_name}}</em></span>
+            </div>
+            <div class="flight-card__info-block">
+              <span>Nonstop</span>
+            </div>
+          </div>
+        {{/each}}
+        <button value={{flight.id}} class="select-flight select-flight--checkout" onclick={{action "fakeCheckout"}}>
+          <span>Buy {{if isBothWayFlight "Tickets" "Ticket"}}</span>
+        </button>
+        {{#if showSuccessMessage}}
+          <div class="flight-card flight-card--success-message">
+            <div class="flight-card__info-block">
+              <span>{{if isBothWayFlight "Tickets" "Ticket"}} booked succesfully. We have emailed your e-ticket. This
+                page will auto-refresh in 5 seconds.</span>
+            </div>
+          </div>
+        {{/if}}
+        {{!-- Checkout page view - end --}}
+
+      {{else}}
+
+        {{!-- Flight list view - start --}}
+
+        {{!-- Flight list - hero bar - start --}}
+        <div class="flight-card">
+          <div class="flight-card__info-block">
+            <span class="flight-card__info-block--title">
+              <span>Choose flight to {{destination}}</span>
+            </span>
+            <span>{{if isBothWayFlight "Round trip" "One way"}}</span>
+
+          </div>
+          <div class="flight-card__info-block flight-card__info-block--right">
+            <div>Departing on: <strong>{{departureDate}}</strong></div>
+            {{#if isBothWayFlight}}
+              <div>Returning on: <strong>{{returnDate}}</strong></div>
+            {{/if}}
+          </div>
+        </div>
+        {{!-- Flight list - hero bar - end --}}
+
+        {{#each filteredFlights as |flight|}}
+
+          {{!-- Flight list - flight items - start --}}
+          <div class="flight-card">
+            <div><img class="flight-card__placeholder-img" src="assets/images/plane.png"></div>
+            <div class="flight-card__info-block">
+              <span class="flight-card__info-block--title">
+                {{flight.source}} {{fa-icon "long-arrow-alt-right"}} {{flight.destination}}</span>
+              <span><em>{{flight.flight_name}}</em> - Nonstop</span>
+              {{#if returnDate}}<span>round trip</span>{{/if}}
+
+            </div>
+            <div class="flight-card__info-block">
+              <div>Flight time: {{flight.timeMap}}</div>
+              Duration: ({{flight.duration_in_hr}} hours)
+
+            </div>
+            <div class="flight-card__info-block flight-card__info-block--right">
+              <button value={{flight.id}} class="flight-card__info-block--button select-flight" onclick={{action "selectFlight" value="target.value"}}>
+                <span>{{flight.processedSum}}</span>
+              </button>
+            </div>
+          </div>
+          {{!-- Flight list - flight items - end --}}
+
+        {{/each}}
+        {{!-- Flight list view - end --}}
+
+      {{/if}}
+
+    {{/if}}
+
   </div>
 </div>
-
-{{!-- {{#each model as |flight|}}
-  {{flight.flight_name}}
-  {{flight.source}}
-  {{flight.destination}}
-  {{flight.departure_time}}
-  {{flight.duration_in_hr}}
-  {{flight.currency}}
-  {{flight.price}}
-  <br> <br>
-{{/each}} --}}
