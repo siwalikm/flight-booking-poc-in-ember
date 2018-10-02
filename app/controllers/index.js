@@ -2,8 +2,14 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
-  source: 'Kolkata',
-  destination: 'Pune',
+  inrTypeface: '₹',
+  minRange: 2000,
+  maxRange: 10000,
+  minPriceValue: 2000,
+  maxPriceValue: 10000,
+  isSliderVisible: false,
+  source: null,
+  destination: null,
   departureDate: null,
   returnDate: null,
   isBothWayFlight: null,
@@ -59,6 +65,8 @@ export default Controller.extend({
     'source',
     'destination',
     'departureDate',
+    'minPriceValue',
+    'maxPriceValue',
     'returnDate', function () {
       let model = this.get('model');
       return model
@@ -66,7 +74,8 @@ export default Controller.extend({
           // sorting relevent flights based on to and fro locations
           return (
             flight.destination == this.get('destination') &&
-            flight.source == this.get('source')
+            flight.source == this.get('source') &&
+            flight.price >= this.get('minPriceValue') && flight.price <= this.get('maxPriceValue')
           );
         })
         .map(flight => {
@@ -84,7 +93,18 @@ export default Controller.extend({
   ),
 
   actions: {
+
+    minSlider(el) {
+      this.set('minPriceValue', el);
+    },
+
+
+    maxSlider(el) {
+      this.set('maxPriceValue', el);
+    },
+
     formSubmit(formData) {
+      this.set('isSliderVisible', true);
       this.set('selectedFlightsId', []);
       this.set('isSelectionComplete', false);
       this.set('source', formData.source);
@@ -102,7 +122,6 @@ export default Controller.extend({
     },
 
     selectFlight(flightId) {
-
       const isBothWayFlight = this.get('isBothWayFlight');
       this.get('selectedFlightsId').pushObject(flightId);
       if (isBothWayFlight) {

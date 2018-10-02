@@ -4,9 +4,23 @@
 
   <div class="filter-wrapper">
     {{#filter-panel submit=(action "formSubmit") citiesList=getCities}}
-      <div class="filter-wrapper__slider">
-        <input type="range" min="2000" max="10000" value="4000" class="slider" id="myRange">
+    {{#if isSliderVisible}}
+      <div class="slidecontainer">
+        <div>choose minimum ticket price</div>
+        {{inrTypeface}} {{minRange}}
+        <input type="range" min={{minRange}} max={{maxRange}} value={{minPriceValue}} onchange={{action 'minSlider' value="target.value"}}
+          class="slider" id="myRange">
+        {{inrTypeface}} {{maxRange}}
+
+        <div>choose maximum ticket price</div>
+        {{inrTypeface}} {{minPriceValue}}
+        <input type="range" min={{minPriceValue}} max={{maxRange}} value={{maxPriceValue}} onchange={{action 'maxSlider' value="target.value"}}
+          class="slider" id="myRange">
+        {{inrTypeface}} {{maxRange}}
+        <br> <br>
+        <div>Showing tickets within <span class="rangeVal">{{inrTypeface}} {{minPriceValue}}</span> and <span class="rangeVal">{{inrTypeface}} {{maxPriceValue}}</span></div>
       </div>
+      {{/if}}
     {{/filter-panel}}
   </div>
 
