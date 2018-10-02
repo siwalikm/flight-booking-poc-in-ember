@@ -2,7 +2,7 @@
 
 This is a working POC of a minimal flight booking dashboard with vanilla JS and Ember framework.
 
-<img style="cursor: zoom-in;" src="https://github.com/siwalikm/flight-booking-poc-in-ember/tree/master/public/assets/images/screengrab.gif?raw=true" width="100%">
+<img style="cursor: zoom-in;" src="https://github.com/siwalikm/flight-booking-poc-in-ember/blob/master/public/assets/images/screengrab.gif?raw=true" width="100%">
 
 ## Installation
 
